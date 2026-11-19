@@ -1,8 +1,8 @@
 function abrirForm(){
-    document.getElementById("formulario").style.display="flex";
+    document.getElementById("formulario").classList.add("mostrar");
 }
 function cerrarForm(){
-    document.getElementById("formulario").style.display="none";
+    document.getElementById("formulario").classList.remove("mostrar");
 }
 function confirmar(){
     let nombre=document.getElementById("nombre").value;
