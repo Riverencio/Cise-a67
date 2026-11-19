@@ -1,11 +1,20 @@
 body{
     background-color: rgb(212, 239, 248);
     font-family: 'Times New Roman', Times, serif;
-    font-size:large
+    font-size:large;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    align-items:center;
+    display:flex;
+    justify-content:center;
 }
 .arriba{
     display:flex;
     justify-content: space-between;
+    align-items:center;
     width: 100%;
     padding: 40px;
     box-sizing:border-box;
@@ -13,7 +22,7 @@ body{
     top:0;
     left:0;
 }
-button{
+.arriba button{
 padding: 10px 20px;
 border:none;
 border-radius:8px;
@@ -21,6 +30,22 @@ cursor:pointer;
 font-family: Georgia, 'Times New Roman', Times, serif;
 color:white;
 background-color: rgb(17, 0, 102);
+}
+.formulario{
+    width:400px;
+    margin:20px auto;
+    background:#8286ff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.formulario input{
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
 }
 #cuadro-info{
 position:fixed;
@@ -56,4 +81,51 @@ transition:transform 0.4s ease;
     font-family:Georgia, 'Times New Roman', Times, serif;
     font-size: 30px;
     color: rgb(17, 0, 102);
+}
+.panel-group{
+width:700px;
+margin:0 auto;
+
+
+}
+.tarjeta{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:flex-start;
+    gap:4px;
+    min-width: 700px;
+    height: 80px;
+    margin:10px 0;
+    word-wrap:break-word;
+    background-color:#8286ff;
+    background-clip:border-box;
+    border:1px solid rgba(33, 16, 80, 0.3);
+    border-radius:0.25rem;
+    line-height:1.3;
+}
+.tarjeta b{
+    color:white;
+}
+#cosadepanel{
+    position:absolute;
+    top:5px;
+    left:0%;
+    color:white;
+    font-family:monospace;
+}
+.text-center{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.btnEliminar{
+    position:absolute;
+    top:10px;
+    right:10px;
+    background:#ff4d4d;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:8px;
+    cursor:pointer;
 }

@@ -10,15 +10,33 @@
 <body>
     
     <div class="arriba">
-        <button id="menu">Menú</button>
+        <div class="izquierda">
+        <button id="menu">&#9776;</button>
+        </div>
+        <div class="centro">
         <h3 id="titulo">Nombre del proyecto</h3>
-        <button id="cambiointer">Interfaz de comprador</button>
+        </div>
+        <div class="derecha">
+        <button id="agregar" onclick="abrirForm()">+</button>
+        <button id="cambiointer">Interfaz de vendedor</button>
+        </div>
         
+    </div>
+    <div id="formulario" class="formulario" style=" display:none;">
+        <h4>Nuevo producto</h4>
+        <input type="text" id="nombre" placeholder="Nombre del producto">
+        <input type="text" id="descripcion" placeholder="Descripción breve">
+        <input type="number" id="precio" placeholder="Precio">
+        <button onclick="confirmar()">Confirmar</button>
+        <button onclick="cerrarForm()">Cancelar</button>
     </div>
        
     <div id="cuadro-info">
         <h2>Menú</h2>
         <p>No hay menu</p>
+    </div>
+    <div id="panel-group">
+       
     </div>
     
 <script src="script.js"></script>
