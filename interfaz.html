@@ -25,8 +25,11 @@
     <div id="formulario" class="formulario">
         <h4>Nuevo producto</h4>
         <input type="text" id="nombre" placeholder="Nombre del producto">
-        <input type="text" id="descripcion" placeholder="Descripción breve">
         <input type="number" id="precio" placeholder="Precio">
+        <textarea id="descripcion" placeholder="Descripción breve"></textarea>
+        <label>Imagen del producto</label>
+        <input type="file" id="imagen" accept="image/*">
+        <input type="url" id="ubicacion" placeholder="Url de la ubicación del producto">
         <button onclick="confirmar()">Confirmar</button>
         <button onclick="cerrarForm()">Cancelar</button>
     </div>
