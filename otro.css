@@ -3,7 +3,8 @@ body{
 background-color: rgb(207, 138, 138);
 text-align: center;
 font-family: 'Times New Roman', Times, serif;
-font-size:large;
+font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 30px;
 
 }
 
@@ -18,10 +19,217 @@ color:white;
 background-color: rgb(146, 11, 27);
 
 }
+#titulo{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    top:20px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 30px;
+    color: rgb(17, 0, 102);
+}
 
 .boton {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 10px;
+}
+.tarjeta{
+    position:relative !important;
+    margin-top:0 !important;
+    margin-bottom:10px !important;
+    top:0 !important;
+    bottom: auto !important;
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    align-items:center;
+    gap:15px;
+    text-align:left;
+    max-width: 700px;
+    min-width: auto;
+    width: 90%;
+    height: auto;
+    min-height: 100px;
+    margin:10px auto;
+    word-wrap:break-word;
+    background-color:#0e1162c1;
+    background-clip:border-box;
+    border:1px solid rgba(33, 16, 80, 0.3);
+    border-radius:0.25rem;
+    line-height:1.3;
+    align-self:center;
+}
+#panel-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+
+.tarjeta img{
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-left:5px;
+    margin-top:5px;
+}
+.detalle{
+    display:none;
+    margin-top:2px;
+    color:white;
+    margin-left:5px;
+}
+.detalle a{
+    color:rgb(139, 207, 255);
+    text-decoration:underline;
+}
+.tarjeta.expandida .detalle{
+    display:block;
+}
+.tarjeta b{
+    color:white;
+    font-family:monospace;
+}
+.tarjeta button{
+    background-color:#2a2b4500;
+    box-shadow:none;
+    border:none;
+    color:rgba(228, 228, 228, 0.63);
+    margin-top:10px;
+    cursor:pointer;
+    width:auto;
+    margin:10px 0 0 0;
+    margin-left:0;
+    margin-right:auto;
+    padding:8px 18px;
+    text-align:left;
+}
+.tarjeta.expandida button{
+    margin-top:auto;
+    align-self:flex-start;
+    order:10;
+}
+#cosadepanel{
+    position:absolute;
+    top:5px;
+    left:0%;
+    color:white;
+    font-family:monospace;
+}
+#panel-group.expandido #btn-ver-mas{
+    margin-top:auto;
+    align-self:center;
+}
+#tarjeta-contenido{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    justify-content:space-between;
+}
+#panel-group{
+    display:flex!important;
+    flex-direction:column !important;
+    align-items:center !important;
+    margin-top:150px !important;
+    padding-top:0!important;
+    height:auto !important;
+    justify-content:flex-start !important;
+
+}
+.text-center{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+*{
+    box-sizing:border-box;
+}
+
+.fila {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.lado-img img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.lado-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: left;
+}
+.lado-info b{
+    font-size:30px;
+}
+#cambiointer{
+padding: 10px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-family: Georgia, 'Times New Roman', Times, serif;
+position:absolute;
+top:15px;
+right:40px;
+}
+.derecha button{
+    justify-content:space-between;
+}
+.all{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    width: 100%;
+    padding:15px 40px;
+    box-sizing:border-box;
+    position: fixed;
+    top:0;
+}
+.all button{
+    padding: 10px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-family: Georgia, 'Times New Roman', Times, serif;
+color:white;
+background-color: rgb(92, 0, 0);
+}
+#panel-group.expandido #btn-ver-mas{
+    margin-top:auto;
+    align-self:center;
+}
+.tarjeta.expandida button{
+    margin-top:auto;
+    align-self:flex-start;
+    order:10;
+}
+#cosadepanel{
+    position:absolute;
+    top:5px;
+    left:0%;
+    color:white;
+    font-family:monospace;
+}
+#tarjeta-contenido{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    justify-content:space-between;
 }
