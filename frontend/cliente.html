@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz del Cliente</title>
+    <link rel="stylesheet" href="cliente.css">
+</head>
+<body>
+    <header class="all">
+        <div class="enmedio">
+            <h1 id="titulo">Interfaz del Cliente</h1>
+        </div>
+        <div class="derecha">
+            <button id="cambiointer" type="button" onclick="location.href='cafeteria.html'">Soy cafetería</button>
+        </div>
+    </header>
+
+    <div class="franja-mensajes" role="status" aria-live="polite">
+        <div id="mensaje-error"></div>
+    </div>
+
+    <main class="contenedor-principal">
+        <section id="cliente-controles" class="panel-seccion" aria-label="Filtros y datos del cliente">
+            <div class="controles-grid">
+                <div class="campo-grupo">
+                    <label for="nombre-cliente">Tu nombre</label>
+                    <input type="text" id="nombre-cliente" placeholder="Para reservar y ver reservas">
+                </div>
+                <div class="campo-grupo">
+                    <label for="filtro-categoria">Categoría</label>
+                    <input type="text" id="filtro-categoria" placeholder="Ej. Panadería">
+                </div>
+                <div class="campo-grupo">
+                    <label for="filtro-precio">Precio máximo</label>
+                    <input type="number" id="filtro-precio" min="0" step="0.01" placeholder="Ej. 50">
+                </div>
+                <div class="controles-acciones">
+                    <button type="button" id="btn-filtrar" class="btn-primario">Filtrar</button>
+                    <button type="button" id="btn-actualizar" class="btn-secundario">Actualizar</button>
+                </div>
+            </div>
+        </section>
+
+        <div id="qr-resultado" class="qr-modal" hidden aria-modal="true" role="dialog" aria-labelledby="qr-titulo"></div>
+
+        <section class="catalogo-seccion" aria-labelledby="catalogo-titulo">
+            <h2 id="catalogo-titulo" class="subtitulo-seccion">Lotes disponibles</h2>
+            <div id="panel-group"></div>
+        </section>
+
+        <section id="mis-reservas-panel" class="panel-seccion" aria-labelledby="reservas-titulo">
+            <h4 id="reservas-titulo" class="subtitulo-seccion">Mis reservas</h4>
+            <div id="mis-reservas-lista"></div>
+        </section>
+    </main>
+
+    <script type="module" src="cliente.js"></script>
+</body>
+</html>

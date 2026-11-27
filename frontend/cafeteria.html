@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz de Cafeteria</title>
+    <link rel="stylesheet" href="cafeteria.css">
+</head>
+<body>
+    <header class="arriba">
+        <div class="izquierda">
+            <button id="menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="cuadro-info">&#9776;</button>
+            <div class="marca-cafeteria">
+                <span id="cafeteria-nombre">Cafetería</span>
+                <span id="cafeteria-simulado" class="badge-simulado" style="display: none;">DATOS DE PRUEBA SIMULADOS</span>
+            </div>
+        </div>
+        <div class="derecha">
+            <button id="cambiointer" type="button" class="btn-secundario" onclick="location.href='cliente.html'">Soy cliente</button>
+            <button id="agregar" type="button" class="btn-primario" onclick="abrirForm()">+ Publicar lote</button>
+        </div>
+    </header>
+
+    <div id="aviso-suscripcion" class="banner-suscripcion"></div>
+
+    <div class="franja-mensajes" role="status" aria-live="polite">
+        <div id="mensaje-error"></div>
+        <div id="mensaje-estado"></div>
+    </div>
+
+    <div id="menu-backdrop" class="menu-backdrop" hidden></div>
+    <nav id="cuadro-info" aria-label="Menú principal">
+        <div class="menu-cabecera">
+            <h2>Menú</h2>
+            <button type="button" id="menu-cerrar" class="menu-cerrar" aria-label="Cerrar menú">&times;</button>
+        </div>
+        <ul class="menu-lista">
+            <li><button type="button" id="menu-publicar" class="menu-item">Publicar lote</button></li>
+            <li><button type="button" id="menu-validar" class="menu-item">Validar código</button></li>
+            <li><button type="button" id="menu-ia" class="menu-item">Reporte con IA</button></li>
+            <li><button type="button" id="menu-resumen" class="menu-item">Resumen</button></li>
+            <li><a href="cliente.html" id="menu-cliente" class="menu-item menu-link">Ver como cliente</a></li>
+        </ul>
+        <div id="menu-demo-wrap" class="menu-demo-wrap" style="display: none;">
+            <button type="button" id="menu-reiniciar-demo" class="menu-item menu-peligro">Reiniciar datos de demostración</button>
+        </div>
+    </nav>
+
+    <main class="contenedor-principal">
+        <h1 id="titulo">Interfaz de Cafetería</h1>
+
+        <section id="resumen-panel" class="panel-seccion" aria-labelledby="resumen-titulo">
+            <h2 id="resumen-titulo" class="subtitulo-seccion">Resumen</h2>
+            <div class="resumen-grid">
+                <div class="resumen-card">
+                    <span class="res-etiqueta">Publicado</span>
+                    <span id="res-publicado" class="res-numero">0</span>
+                    <span class="res-unidad">unidades</span>
+                </div>
+                <div class="resumen-card">
+                    <span class="res-etiqueta">Reservado</span>
+                    <span id="res-reservado" class="res-numero">0</span>
+                    <span class="res-unidad">unidades</span>
+                </div>
+                <div class="resumen-card">
+                    <span class="res-etiqueta">Recogido</span>
+                    <span id="res-recogido" class="res-numero">0</span>
+                    <span class="res-unidad">unidades</span>
+                </div>
+                <div class="resumen-card">
+                    <span class="res-etiqueta">Vencido</span>
+                    <span id="res-vencido" class="res-numero">0</span>
+                    <span class="res-unidad">unidades</span>
+                </div>
+                <div id="res-disponible-card" class="resumen-card" style="display: none;">
+                    <span class="res-etiqueta">Disponible</span>
+                    <span id="res-disponible" class="res-numero">0</span>
+                    <span class="res-unidad">unidades</span>
+                </div>
+            </div>
+            <div class="resumen-pie">
+                <small class="nota-simulado">Incluye datos de prueba simulados</small>
+                <button type="button" id="btn-actualizar" class="btn-secundario">Actualizar</button>
+            </div>
+        </section>
+
+        <div class="paneles-dobles">
+            <section id="validar-panel" class="panel-seccion" aria-labelledby="validar-titulo">
+                <h2 id="validar-titulo" class="subtitulo-seccion">Validar código</h2>
+                <div class="campo-grupo">
+                    <label for="codigo-validar">Código de reserva</label>
+                    <div class="fila-validar">
+                        <input type="text" id="codigo-validar" placeholder="Código RES-XXXXXX">
+                        <button type="button" id="btn-validar" class="btn-primario">Validar</button>
+                    </div>
+                </div>
+                <div id="resultado-validar" class="resultado-validar"></div>
+            </section>
+
+            <section id="ia-panel" class="panel-seccion" aria-labelledby="ia-titulo">
+                <div class="ia-cabecera">
+                    <h2 id="ia-titulo" class="subtitulo-seccion">Reporte con IA</h2>
+                    <span id="etiqueta-ia" class="badge-simulado"></span>
+                </div>
+                <div class="ia-acciones">
+                    <button type="button" id="btn-reporte-ia" class="btn-primario">Generar reporte con IA</button>
+                </div>
+                <div id="resultado-ia" class="resultado-ia-panel"></div>
+            </section>
+        </div>
+
+        <section id="formulario" class="formulario" aria-labelledby="form-titulo">
+            <h4 id="form-titulo">Nuevo lote</h4>
+            <div class="form-grid">
+                <div class="campo-grupo">
+                    <label for="nombre">Nombre del producto</label>
+                    <input type="text" id="nombre" placeholder="Ej. Croissant de almendra">
+                </div>
+                <div class="campo-grupo">
+                    <label for="categoria">Categoría</label>
+                    <input type="text" id="categoria" placeholder="Categoría (ej. Panadería)">
+                </div>
+                <div class="campo-grupo form-completo">
+                    <label for="descripcion">Descripción breve</label>
+                    <textarea id="descripcion" rows="2" placeholder="Descripción breve del lote"></textarea>
+                </div>
+                <div class="campo-grupo">
+                    <label for="cantidad_total">Cantidad total</label>
+                    <input type="number" id="cantidad_total" min="1" step="1" placeholder="Ej. 10">
+                </div>
+                <div class="campo-grupo">
+                    <label for="hora_limite">Hora límite</label>
+                    <input type="datetime-local" id="hora_limite">
+                </div>
+                <div class="campo-grupo">
+                    <label for="precio_original">Precio original</label>
+                    <input type="number" id="precio_original" min="0.01" step="0.01" placeholder="Ej. 50.00" required>
+                </div>
+                <div class="campo-grupo">
+                    <label for="precio_descuento">Precio con descuento</label>
+                    <input type="number" id="precio_descuento" min="0" step="0.01" placeholder="Ej. 25.00">
+                </div>
+                <div class="campo-grupo">
+                    <label for="ubicacion">Ubicación del producto</label>
+                    <input type="text" id="ubicacion" placeholder="Dirección o sucursal">
+                    <small>Escribe la dirección completa; se usa para el mapa.</small>
+                </div>
+                <div class="campo-grupo">
+                    <label for="maps_url">Enlace de Google Maps (opcional)</label>
+                    <input type="url" id="maps_url" placeholder="https://maps.google.com/...">
+                </div>
+                <div class="campo-grupo form-completo">
+                    <label for="imagen">Imagen del producto</label>
+                    <input type="file" id="imagen" accept="image/jpeg,image/png,image/webp">
+                </div>
+            </div>
+            <div class="form-acciones">
+                <button id="btn-confirmar" type="button" class="btn-primario" onclick="confirmar(this)">Publicar</button>
+                <button type="button" class="btn-secundario" onclick="cerrarForm()">Cancelar</button>
+            </div>
+        </section>
+
+        <section class="lotes-seccion" aria-labelledby="lotes-titulo">
+            <h2 id="lotes-titulo" class="subtitulo-seccion">Lotes publicados</h2>
+            <div id="panel-group"></div>
+        </section>
+    </main>
+
+    <script type="module" src="cafeteria.js"></script>
+</body>
+</html>

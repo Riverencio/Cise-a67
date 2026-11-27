@@ -1,0 +1,46 @@
+- backend/package.json: Se crearon dependencias (express, firebase-admin, multer, cors, dotenv, qrcode) y scripts start/test:flujo para el servidor.
+- backend/.env.example: Se documentaron las variables PORT, FIREBASE_SERVICE_ACCOUNT_PATH, GEMINI_API_KEY, GEMINI_MODEL, GEMINI_MOCK y DEMO_MODE.
+- backend/server.js: Se implementó el servidor Express con estáticos (/frontend, /uploads), caducidad automática, CRUD de lotes, transacciones de reservas con QR, validación, cancelación, resumen y endpoints demo.
+- backend/test/flujo.js: Se creó la suite de pruebas de flujo completo con reporte PASA/FALLA por caso.
+- backend/seed/datos_prueba.json: Se crearon datos de prueba simulados (cafetería en prueba, 22 lotes de últimos 14 días y 18 reservas).
+- backend/seed/cargar_seed.js: Se creó el script de carga idempotente (npm run seed) reutilizado por /api/demo/reiniciar.
+- backend/package.json: Se agregó la dependencia @google/genai y el script seed.
+- backend/server.js: Se agregó POST /api/reporte-ia (agregados por producto/día + modo simulado) y se conectó /api/demo/reiniciar al seed.
+
+- frontend/cafeteria.html: Se agregaron campos del modelo de lote, resumen, validador RES-XXXXXX, botón de reporte IA, aviso de prueba y enlace "Soy cliente", para conectar la vista de cafetería con la API.
+- frontend/cafeteria.js: Se eliminaron Firebase e imgbb y se conectó la vista de cafetería a /api/lotes, /api/resumen, /api/reservas/validar, /api/cafeteria y /api/reporte-ia con fetch() y manejo de errores.
+- frontend/cliente.html: Se agregaron controles de nombre de cliente, filtros de categoría/precio, contenedor de QR, sección "Mis reservas" y enlace "Soy cafetería", para conectar la vista de cliente con la API.
+- frontend/cliente.js: Se eliminó Firebase y se conectó la vista de cliente a /api/lotes (polling cada 5 s), /api/reservas (POST/GET/PATCH) y visualización de QR y etiqueta de datos simulados.
+
+- frontend/cafeteria.js: Se agregó recarga de lotes al validar código y polling cada 5 s de lotes y resumen sin re-renderizar el formulario ni el campo de código.
+- frontend/*, AGENTS.md, CAMBIOS.md: Se renombraron interfaz.* → cafeteria.*, script.js → cafeteria.js y otro.* → cliente.* y se actualizaron todas las referencias para mayor claridad.
+
+- `backend/server.js`: caché de caducidad 30 s, caché de resumen 10 s con invalidación, consultas filtradas con `where` en lotes/reservas y log de lecturas en `DEMO_MODE`; para reducir lecturas de Firestore.
+- `frontend/cafeteria.js`: polling cada 15 s pausado en pestaña oculta, botón Actualizar, conservación de tarjetas abiertas y sin redibujo si no cambia la respuesta; para reducir lecturas y mejorar estabilidad.
+- `frontend/cliente.js`: polling cada 20 s pausado en pestaña oculta, botón Actualizar, filtro `?cliente=` en reservas, conservación de tarjetas abiertas y sin redibujo si no cambia la respuesta; para reducir lecturas y mejorar estabilidad.
+- `backend/server.js`: validación de `precio_original` y `maps_url` en `POST /api/lotes`, `demo_mode` en `GET /api/cafeteria` e invalidación de caché de caducidad en endpoints demo; para nuevas funcionalidades y consistencia.
+- `backend/seed/datos_prueba.json`: agregado `precio_original` a todos los lotes y offsets relativos de fecha en cafetería, lotes y reservas; para datos realistas y vigentes.
+- `backend/seed/cargar_seed.js`: cálculo de fechas relativas al ejecutar `npm run seed` o `/api/demo/reiniciar`; para mantener vigentes los lotes activos e históricos.
+- `frontend/cafeteria.html`: campos `precio_original`, `maps_url`, ayuda en ubicación y opciones funcionales en el menú lateral; para completar publicación y navegación.
+- `frontend/cafeteria.js`: validación y envío de `precio_original`/`maps_url`, porcentaje de descuento, menú lateral funcional y botones demo según `demo_mode`; para operar la nueva funcionalidad sin tocar CSS.
+- `frontend/cliente.js`: precio original tachado con `-X%`, botón "Abrir en Google Maps", iframe lazy en "Ver más" (bloqueado en `simulado:true`) y escape de comillas; para mostrar ubicación y descuentos de forma segura.
+- `backend/.env.example`: se agregó `TZ=America/Mexico_City`; para calcular el día de la semana en la zona horaria de la cafetería.
+- `backend/server.js`: se rehizo `POST /api/reporte-ia` con métricas de últimos 30 días (lotes cerrados, tasa de rescate, top 5 productos, días lunes-domingo, banderas), `systemInstruction` y plantilla simulada fija de 5 secciones; para reportes precisos y sin fugas de PII.
+- `frontend/cafeteria.js`: se actualizó `generarReporteIA()` para mostrar cifras principales, cada línea del reporte en `<p>` con `textContent` e indicador de modo; para conservar formato sin tocar CSS.
+- `backend/test/flujo.js`: se agregaron 2 casos de prueba para `POST /api/reporte-ia` en modo simulado (coherencia de métricas y 5 títulos); para validar el nuevo contrato.
+- `backend/server.js`: se corrigió validación de `precio_descuento`/`hora_limite` futura/longitudes/zona UTC-6 a ISO, `usuario@host` en `maps_url`, cancelación si lote venció, borrado de reservas huérfanas al eliminar lote, bloqueo de `simulado:false` en demo, errores 500 genéricos y mensajes de arranque/.env/puerto ocupado; para cerrar fallos ALTO y MEDIO.
+- `frontend/cafeteria.html`: se agregó `#mensaje-estado` y `id="btn-confirmar"` con paso de `this`; para mostrar confirmaciones demo y deshabilitar botón al publicar.
+- `frontend/cafeteria.js`: se agregó `parseJsonSeguro`, `formatearHoraLimite`, `mostrarEstado`, validación de `precio_descuento` vacío y deshabilitado de botones en peticiones; para evitar envíos dobles y errores no JSON.
+- `frontend/cliente.js`: se agregó `parseJsonSeguro`, `formatearHoraLimite`, `max` en cantidad, filtro `precioMax >= 0` y deshabilitado de botones en reservar/cancelar; para evitar reservas dobles y errores de interfaz.
+- `backend/test/flujo.js`: se agregaron 6 casos de prueba (13-18) cubriendo validaciones, zona horaria, cancelación vencida, huérfanos y protección demo; para verificar correcciones ALTO.
+- `backend/server.js`: se unificó el cálculo de inventario en `calcularTotalesLote`/`calcularTotalesLotes` para `GET /api/resumen` y `POST /api/reporte-ia`, agregando `disponible` al resumen; para garantizar cifras coherentes.
+- `backend/seed/datos_prueba.json`: se ajustó `cantidad_disponible` en 11 lotes para que cada lote cumpla `cantidad_total = disponible + reservada + recogida + vencida`; para mantener consistencia del seed.
+- `backend/test/flujo.js`: se agregaron casos 0 y 19 verificando la suma de `GET /api/resumen` tras sembrar y la coincidencia de vencidas con `POST /api/reporte-ia` al vencer todos los lotes activos; para asegurar coherencia continua.
+
+- `frontend/cafeteria.html`: se reorganizó la estructura con barra superior, banner de suscripción, franja de mensajes, menú lateral con backdrop, tarjetas de resumen, secciones de validar/reporte IA lado a lado, formulario etiquetado y cuadrícula de lotes; para corregir encimados y mejorar legibilidad.
+- `frontend/cafeteria.css`: se definieron variables en `:root`, layout flex/grid responsive, contraste claro sobre tarjetas oscuras, estilos de botones/badges/reporte y menú lateral opaco; para resolver problemas visuales sin position:absolute innecesarios.
+- `frontend/cafeteria.js`: se agregó cierre del menú con Escape/clic fuera y bloqueo de scroll, formato local `dateStyle: 'medium'`, mensaje de error de red con limpieza al recuperar conexión, encabezado/resumen/cifras en elementos separados y clases del reporte; según JS PERMITIDO.
+- `frontend/cliente.html`: se reorganizó la barra superior, franja de mensajes, bloque de filtros con etiquetas y botón Actualizar, modal QR, catálogo en cuadrícula y sección Mis reservas; para ordenar la vista y evitar superposiciones.
+- `frontend/cliente.css`: se definieron variables en `:root`, layout flex/grid responsive, contraste claro en tarjetas, modal QR centrado, tarjetas de reservas con badges de estado y contenedor 16:9 para mapas; para corregir legibilidad y diseño móvil/escritorio.
+- `frontend/cliente.js`: se agregó modal QR con cierre por Escape/clic fuera y bloqueo de scroll, formato local `dateStyle: 'medium'`, manejo de error de red, estados vacío/carga en catálogo y tarjetas estructuradas en Mis reservas; según JS PERMITIDO.
+- `README.md`: se creó la documentación principal del MVP en español (descripción, stack, configuración sin secretos, comandos, flujo demo, real vs simulado, limitaciones y próximos pasos); para cumplir la Fase 5.
